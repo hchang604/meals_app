@@ -1,32 +1,37 @@
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  ListRenderItemInfo,
+} from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
-import { CATEGORIES } from "../data/dummy-data";
+import { CATEGORIES, MEALS } from "../data/dummy-data";
+import Meal from "../models/meal";
 
 type CategoryMealsScreenProps = {};
 
 const CategoryMealsScreen = (
   props: CategoryMealsScreenProps & NavigationStackScreenProps
 ) => {
+  const renderMealItem = (itemData: ListRenderItemInfo<Meal>) => {
+    return (
+      <View>
+        <Text>{itemData.item.title}</Text>
+      </View>
+    );
+  };
+
   const catId = props.navigation.getParam("categoryId");
 
-  const selectedCategory = CATEGORIES.find((cat) => cat.id === catId);
+  const displayedMeals = MEALS.filter((meal) =>
+    meal.categoryIds.includes(catId)
+  );
 
   return (
     <View style={styles.screen}>
-      <Text>{selectedCategory?.title}</Text>
-      <Button
-        title="Go to Meal Details"
-        onPress={() => {
-          props.navigation.navigate("MealDetail");
-        }}
-      />
-      <Button
-        title="Go Back"
-        onPress={() => {
-          props.navigation.goBack();
-        }}
-      />
+      <FlatList data={displayedMeals} renderItem={renderMealItem} />
     </View>
   );
 };
