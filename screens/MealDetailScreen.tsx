@@ -1,15 +1,20 @@
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
+import { MEALS } from "../data/dummy-data";
 
 type MealDetailScreenProps = {};
 
 const MealDetailScreen = (
   props: MealDetailScreenProps & NavigationStackScreenProps
 ) => {
+  const mealId = props.navigation.getParam("mealId");
+
+  const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+
   return (
     <View style={styles.screen}>
-      <Text>The Meal Detail Screen</Text>
+      <Text>{selectedMeal?.title}</Text>
       <Button
         title="Go Back to Categories"
         onPress={() => {
@@ -18,6 +23,18 @@ const MealDetailScreen = (
       />
     </View>
   );
+};
+
+MealDetailScreen.navigationOptions = (
+  navigationData: NavigationStackScreenProps
+) => {
+  const mealId = navigationData.navigation.getParam("mealId");
+
+  const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+
+  return {
+    headerTitle: selectedMeal?.title,
+  };
 };
 
 const styles = StyleSheet.create({

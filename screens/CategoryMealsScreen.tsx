@@ -1,13 +1,8 @@
 import React from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  ListRenderItemInfo,
-} from "react-native";
+import { View, FlatList, StyleSheet, ListRenderItemInfo } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { CATEGORIES, MEALS } from "../data/dummy-data";
+import MealItem from "../components/MealItem";
 import Meal from "../models/meal";
 
 type CategoryMealsScreenProps = {};
@@ -17,9 +12,21 @@ const CategoryMealsScreen = (
 ) => {
   const renderMealItem = (itemData: ListRenderItemInfo<Meal>) => {
     return (
-      <View>
-        <Text>{itemData.item.title}</Text>
-      </View>
+      <MealItem
+        title={itemData.item.title}
+        duration={itemData.item.duration}
+        complexity={itemData.item.complexity}
+        affordability={itemData.item.affordability}
+        image={itemData.item.imageUrl}
+        onSelectMeal={() => {
+          props.navigation.navigate({
+            routeName: "MealDetail",
+            params: {
+              mealId: itemData.item.id,
+            },
+          });
+        }}
+      />
     );
   };
 
@@ -31,7 +38,11 @@ const CategoryMealsScreen = (
 
   return (
     <View style={styles.screen}>
-      <FlatList data={displayedMeals} renderItem={renderMealItem} />
+      <FlatList
+        data={displayedMeals}
+        renderItem={renderMealItem}
+        style={{ width: "100%" }}
+      />
     </View>
   );
 };

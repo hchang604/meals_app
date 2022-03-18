@@ -1,28 +1,30 @@
+import { ImageSourcePropType } from "react-native";
+
 class Meal {
-  id: String;
-  categoryIds: String[];
-  title: String;
-  affordability: String;
-  complexity: String;
-  imageUrl: String;
+  id: string;
+  categoryIds: string[];
+  title: string;
+  affordability: string;
+  complexity: string;
+  imageUrl: string;
   duration: Number;
-  ingrediants: String[];
-  steps: String[];
+  ingrediants: string[];
+  steps: string[];
   isGlutenFree: Boolean;
   isVegan: Boolean;
   isVegetarian: Boolean;
   isLactoseFree: Boolean;
 
   constructor(
-    id: String,
-    categoryIds: String[],
-    title: String,
-    affordability: String,
-    complexity: String,
-    imageUrl: String,
+    id: string,
+    categoryIds: string[],
+    title: string,
+    affordability: string,
+    complexity: string,
+    imageUrl: string,
     duration: Number,
-    ingrediants: String[],
-    steps: String[],
+    ingrediants: string[],
+    steps: string[],
     isGlutenFree: Boolean,
     isVegan: Boolean,
     isVegetarian: Boolean,
