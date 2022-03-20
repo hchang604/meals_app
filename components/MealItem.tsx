@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     height: 200,
     width: "100%",
     backgroundColor: "#ccc",
+    marginVertical: 10,
   },
   mealHeader: {
     height: "85%",

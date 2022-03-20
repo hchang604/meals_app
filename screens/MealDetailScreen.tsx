@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import HeaderButton from "../components/HeaderButton";
 import { MEALS } from "../data/dummy-data";
 
 type MealDetailScreenProps = {};
@@ -34,6 +36,17 @@ MealDetailScreen.navigationOptions = (
 
   return {
     headerTitle: selectedMeal?.title,
+    headerRight: (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Favorite"
+          iconName="ios-star"
+          onPress={() => {
+            console.log("Mark as Fav");
+          }}
+        />
+      </HeaderButtons>
+    ),
   };
 };
 
