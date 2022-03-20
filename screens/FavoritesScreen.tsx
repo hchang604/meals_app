@@ -3,6 +3,9 @@ import { MEALS } from "../data/dummy-data";
 import MealList from "../components/MealList";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { NavigationParams, NavigationRoute } from "react-navigation";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../components/HeaderButton";
+import { NavigationDrawerScreenProps } from "react-navigation-drawer";
 
 type FavoritesScreenProps = {
   navigation: StackNavigationProp<
@@ -20,8 +23,23 @@ const FavoritesScreen = (props: FavoritesScreenProps) => {
   );
 };
 
-FavoritesScreen.navigationOptions = {
-  headerTitle: "Your Favorites",
+FavoritesScreen.navigationOptions = (
+  navigationData: NavigationDrawerScreenProps
+) => {
+  return {
+    headerTitle: "Your Favorites",
+    headerLeft: (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navigationData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 export default FavoritesScreen;
