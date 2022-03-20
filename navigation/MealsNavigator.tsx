@@ -88,19 +88,33 @@ const MealsFavTabNavigator =
         },
       });
 
-const FiltersNavigator = createStackNavigator({
-  Filters: FilterScreen,
-});
+const FiltersNavigator = createStackNavigator(
+  {
+    Filters: FilterScreen,
+  },
+  {
+    defaultNavigationOptions: defaultStackNavOptions,
+  }
+);
 
 const MainNavigator = createDrawerNavigator(
   {
-    MealsFavs: MealsFavTabNavigator,
+    MealsFavs: {
+      screen: MealsFavTabNavigator,
+      navigationOptions: {
+        drawerLabel: "Meals",
+      },
+    },
     Filters: FiltersNavigator,
   },
   {
     contentOptions: {
       itemsContainerStyle: {
         marginTop: statusBarHeight,
+      },
+      activeTintColor: Colors.secondaryColor,
+      labelStyle: {
+        fontFamily: "open-sans-bold",
       },
     },
   }
