@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, StyleSheet, Switch, Platform } from "react-native";
+import { NavigationParams, NavigationRoute } from "react-navigation";
 import { NavigationDrawerScreenProps } from "react-navigation-drawer";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import CustomHeaderButton from "../components/HeaderButton";
 import Colors from "../constants/Colors";
 
@@ -25,13 +27,34 @@ const FilterSwitch = (props: FilterSwitchProps) => {
   );
 };
 
-type FilterScreenProps = {};
+type FilterScreenProps = {
+  navigation: StackNavigationProp<
+    NavigationRoute<NavigationParams>,
+    NavigationParams
+  >;
+};
 
 const FilterScreen = (props: FilterScreenProps) => {
+  const { navigation } = props;
   const [isGlutenFree, setIsGlutenFree] = useState(false);
   const [isLactoseFree, setIsLactoseFree] = useState(false);
   const [isVegan, setIsVegan] = useState(false);
   const [isVegetarian, setIsVegetarian] = useState(false);
+
+  const saveFilters = useCallback(() => {
+    const appliedFilters = {
+      glutenFree: isGlutenFree,
+      lactoseFree: isLactoseFree,
+      vegan: isVegan,
+      vegetarian: isVegetarian,
+    };
+
+    console.log(appliedFilters);
+  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian]);
+
+  useEffect(() => {
+    navigation.setParams({ save: saveFilters });
+  }, [saveFilters]); // adding navigation to depdenency causes infinite loop because setParams causes rerender which causes navigation to be redefined
 
   return (
     <View style={styles.screen}>
@@ -73,6 +96,15 @@ FilterScreen.navigationOptions = (
           onPress={() => {
             navigationData.navigation.toggleDrawer();
           }}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-save"
+          onPress={navigationData.navigation.getParam("save")}
         />
       </HeaderButtons>
     ),
