@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Image, Text, StyleSheet, ScrollView } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
-import { MEALS } from "../data/dummy-data";
 import DefaultText from "../components/DefaultText";
+import { useAppSelector } from "../store/util";
 
 type ListItemProps = {
   text: string;
@@ -23,9 +23,11 @@ type MealDetailScreenProps = {};
 const MealDetailScreen = (
   props: MealDetailScreenProps & NavigationStackScreenProps
 ) => {
+  const availableMeals = useAppSelector((state) => state.meals.meals);
+
   const mealId = props.navigation.getParam("mealId");
 
-  const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+  const selectedMeal = availableMeals.find((meal) => meal.id === mealId);
 
   if (!selectedMeal) {
     return null;
@@ -54,12 +56,10 @@ const MealDetailScreen = (
 MealDetailScreen.navigationOptions = (
   navigationData: NavigationStackScreenProps
 ) => {
-  const mealId = navigationData.navigation.getParam("mealId");
-
-  const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+  const mealTitle = navigationData.navigation.getParam("mealTitle");
 
   return {
-    headerTitle: selectedMeal?.title,
+    headerTitle: mealTitle,
     headerRight: (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item

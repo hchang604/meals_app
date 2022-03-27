@@ -1,8 +1,9 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
-import { CATEGORIES, MEALS } from "../data/dummy-data";
+import { CATEGORIES } from "../data/dummy-data";
 import MealList from "../components/MealList";
+import { useAppSelector } from "../store/util";
 
 type CategoryMealsScreenProps = {};
 
@@ -11,7 +12,9 @@ const CategoryMealsScreen = (
 ) => {
   const catId = props.navigation.getParam("categoryId");
 
-  const displayedMeals = MEALS.filter((meal) =>
+  const availableMeals = useAppSelector((state) => state.meals.filteredMeals);
+
+  const displayedMeals = availableMeals.filter((meal) =>
     meal.categoryIds.includes(catId)
   );
 

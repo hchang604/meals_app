@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import MealsNavigator from "./navigation/MealsNavigator";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -29,7 +30,11 @@ export default function App() {
     );
   }
 
-  return <MealsNavigator />;
+  return (
+    <Provider store={store}>
+      <MealsNavigator />
+    </Provider>
+  );
 }
 
 const styles = StyleSheet.create({

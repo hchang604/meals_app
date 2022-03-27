@@ -1,11 +1,11 @@
 import React from "react";
-import { MEALS } from "../data/dummy-data";
 import MealList from "../components/MealList";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import { NavigationParams, NavigationRoute } from "react-navigation";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/HeaderButton";
 import { NavigationDrawerScreenProps } from "react-navigation-drawer";
+import { useAppSelector } from "../store/util";
 
 type FavoritesScreenProps = {
   navigation: StackNavigationProp<
@@ -15,12 +15,9 @@ type FavoritesScreenProps = {
 };
 
 const FavoritesScreen = (props: FavoritesScreenProps) => {
-  const dummyFavoriteData = MEALS.filter(
-    (meal) => meal.id === "m1" || meal.id === "m2"
-  );
-  return (
-    <MealList listData={dummyFavoriteData} navigation={props.navigation} />
-  );
+  const favoriteMeals = useAppSelector((state) => state.meals.favoriteMeals);
+
+  return <MealList listData={favoriteMeals} navigation={props.navigation} />;
 };
 
 FavoritesScreen.navigationOptions = (
