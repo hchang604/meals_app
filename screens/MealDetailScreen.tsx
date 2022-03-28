@@ -74,7 +74,7 @@ MealDetailScreen.navigationOptions = (
   const mealTitle = navigationData.navigation.getParam("mealTitle");
   const toggleFavorite = navigationData.navigation.getParam("toggleFav");
   const isFavorite = navigationData.navigation.getParam("isFav");
-  console.log(isFavorite);
+
   return {
     headerTitle: mealTitle,
     headerRight: (

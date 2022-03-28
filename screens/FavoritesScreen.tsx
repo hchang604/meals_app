@@ -6,6 +6,8 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/HeaderButton";
 import { NavigationDrawerScreenProps } from "react-navigation-drawer";
 import { useAppSelector } from "../store/index";
+import DefaultText from "../components/DefaultText";
+import { View, Text, StyleSheet } from "react-native";
 
 type FavoritesScreenProps = {
   navigation: StackNavigationProp<
@@ -16,6 +18,14 @@ type FavoritesScreenProps = {
 
 const FavoritesScreen = (props: FavoritesScreenProps) => {
   const favoriteMeals = useAppSelector((state) => state.meals.favoriteMeals);
+
+  if (favoriteMeals.length === 0 || !favoriteMeals) {
+    return (
+      <View style={styles.content}>
+        <DefaultText text="No Favorite Meals Found. Start adding some!" />
+      </View>
+    );
+  }
 
   return <MealList listData={favoriteMeals} navigation={props.navigation} />;
 };
@@ -38,5 +48,13 @@ FavoritesScreen.navigationOptions = (
     ),
   };
 };
+
+const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
 
 export default FavoritesScreen;
