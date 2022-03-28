@@ -3,6 +3,7 @@ import { FlatList, View, StyleSheet, ListRenderItemInfo } from "react-native";
 import { NavigationParams, NavigationRoute } from "react-navigation";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import Meal from "../models/meal";
+import { useAppSelector } from "../store";
 import MealItem from "./MealItem";
 
 type MealListProps = {
@@ -14,7 +15,12 @@ type MealListProps = {
 };
 
 const MealList = (props: MealListProps) => {
+  const favoriteMeals = useAppSelector((state) => state.meals.favoriteMeals);
+
   const renderMealItem = (itemData: ListRenderItemInfo<Meal>) => {
+    const isFavorite = favoriteMeals.find(
+      (meal) => meal.id === itemData.item.id
+    );
     return (
       <MealItem
         title={itemData.item.title}
@@ -28,6 +34,7 @@ const MealList = (props: MealListProps) => {
             params: {
               mealId: itemData.item.id,
               mealTitle: itemData.item.title,
+              isFav: isFavorite,
             },
           });
         }}
