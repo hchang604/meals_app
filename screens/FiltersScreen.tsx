@@ -6,6 +6,8 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { StackNavigationProp } from "react-navigation-stack/lib/typescript/src/vendor/types";
 import CustomHeaderButton from "../components/HeaderButton";
 import Colors from "../constants/Colors";
+import { useAppDispatch } from "../store";
+import { setFilters } from "../store/actions/meals";
 
 type FilterSwitchProps = {
   label: string;
@@ -34,21 +36,31 @@ type FilterScreenProps = {
   >;
 };
 
+export type FilterSettings = {
+  glutenFree: boolean;
+  lactoseFree: boolean;
+  vegan: boolean;
+  vegetarian: boolean;
+};
+
 const FilterScreen = (props: FilterScreenProps) => {
   const { navigation } = props;
+  const dispatch = useAppDispatch();
   const [isGlutenFree, setIsGlutenFree] = useState(false);
   const [isLactoseFree, setIsLactoseFree] = useState(false);
   const [isVegan, setIsVegan] = useState(false);
   const [isVegetarian, setIsVegetarian] = useState(false);
 
   const saveFilters = useCallback(() => {
-    const appliedFilters = {
+    const appliedFilters: FilterSettings = {
       glutenFree: isGlutenFree,
       lactoseFree: isLactoseFree,
       vegan: isVegan,
       vegetarian: isVegetarian,
     };
-  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian]);
+
+    dispatch(setFilters(appliedFilters));
+  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian, dispatch]);
 
   useEffect(() => {
     navigation.setParams({ save: saveFilters });

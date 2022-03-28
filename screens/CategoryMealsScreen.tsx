@@ -1,9 +1,10 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { CATEGORIES } from "../data/dummy-data";
 import MealList from "../components/MealList";
 import { useAppSelector } from "../store/index";
+import DefaultText from "../components/DefaultText";
 
 type CategoryMealsScreenProps = {};
 
@@ -17,6 +18,14 @@ const CategoryMealsScreen = (
   const displayedMeals = availableMeals.filter((meal) =>
     meal.categoryIds.includes(catId)
   );
+
+  if (displayedMeals.length === 0) {
+    return (
+      <View style={styles.content}>
+        <DefaultText text="No meals found, maybe check your filters?" />
+      </View>
+    );
+  }
 
   return <MealList listData={displayedMeals} navigation={props.navigation} />;
 };
@@ -33,6 +42,12 @@ CategoryMealsScreen.navigationOptions = (
   };
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
 
 export default CategoryMealsScreen;
