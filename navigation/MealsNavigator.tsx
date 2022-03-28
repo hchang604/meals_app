@@ -12,6 +12,11 @@ import { createMaterialBottomTabNavigator } from "react-navigation-material-bott
 import Colors from "../constants/Colors";
 import Constants from "expo-constants";
 import { Platform } from "react-native";
+import { LogBox } from 'react-native';
+
+// Ignore this warning for now as it is caused by a bug with react-navigation-drawer
+LogBox.ignoreLogs(['interpolate() was renamed']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 const statusBarHeight = Constants.statusBarHeight;
 
