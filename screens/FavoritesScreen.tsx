@@ -5,7 +5,7 @@ import { NavigationParams, NavigationRoute } from "react-navigation";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/HeaderButton";
 import { NavigationDrawerScreenProps } from "react-navigation-drawer";
-import { useAppSelector } from "../store/util";
+import { useAppSelector } from "../store/index";
 
 type FavoritesScreenProps = {
   navigation: StackNavigationProp<

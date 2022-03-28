@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { CATEGORIES } from "../data/dummy-data";
 import MealList from "../components/MealList";
-import { useAppSelector } from "../store/util";
+import { useAppSelector } from "../store/index";
 
 type CategoryMealsScreenProps = {};
 
